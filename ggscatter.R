@@ -1,10 +1,9 @@
 library(ggplot2)
 
-mtcars$cyl <- as.factor(mtcars$cyl)
-mtcars$gear <- as.factor(mtcars$gear)
-
 # add text annotations
-gscatter <- function(data, x, y, aes_var = TRUE, reg_line = FALSE, title = NULL, xlab = NULL, ylab = NULL, 
+gscatter <- function(data, x, y, aes_var = TRUE, reg_line = FALSE,
+                     reg_method = 'lm', reg_se = TRUE,
+                     title = NULL, xlab = NULL, ylab = NULL, 
                       color = 'black', shape = 1, size = 1, fill = NA, 
                       xaxlimit = FALSE, yaxlimit = FALSE,
                       x1 = NA, x2 = NA, y1 = NA, y2 = NA, title_col = 'black', 
@@ -39,7 +38,7 @@ gscatter <- function(data, x, y, aes_var = TRUE, reg_line = FALSE, title = NULL,
   }
   
   if(reg_line) {
-    p <- p + geom_smooth(method = 'lm')
+    p <- p + geom_smooth(method = reg_method, se = reg_se)
     p
   }
   
@@ -92,9 +91,12 @@ gscatter <- function(data, x, y, aes_var = TRUE, reg_line = FALSE, title = NULL,
 
 
 # test
+mtcars$cyl <- as.factor(mtcars$cyl)
+mtcars$gear <- as.factor(mtcars$gear)
+
 gscatter(mtcars, 'disp', 'mpg', aes_var = TRUE, 
           color = 'cyl', reg_line = TRUE)
             
-gscatter(mtcars, 'disp', 'mpg', aes_var = FALSE, 
+k <- gscatter(mtcars, 'disp', 'mpg', aes_var = FALSE, 
           color = 'red', shape = 22, size = 3, fill = 'blue',
-          reg_line = TRUE)
+          reg_line = TRUE, reg_method = 'loess', reg_se = FALSE)
