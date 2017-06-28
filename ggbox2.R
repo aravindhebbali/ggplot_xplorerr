@@ -1,13 +1,3 @@
-p <- ggplot(mtcars, aes(x = cyl, y = mpg)) + 
-  geom_boxplot(notch = TRUE, fill = 'blue', color = 'black',
-               outlier.color = 'red', outlier.fill = 'yellow',
-               outlier.shape = 22, outlier.alpha = 0.8,
-               outlier.size = 2) +
-  geom_jitter(width = 0.1) +
-  coord_flip()
-p
-
-
 ggbox <- function(data, x, y, notch = FALSE, fill = 'blue', col = 'black',
                   o_col = 'red', o_fill = 'yellow', o_shape = 22,
                   o_alpha = 0.8, o_size = 2, add_jitter = FALSE, 
