@@ -4,7 +4,7 @@ library(ggplot2)
 # mtcars$gear <- as.factor(mtcars$gear)
 
 ggbar1 <- function(data, column, bar_col = 'blue', bor_col = 'black',
-                   yaxlimit = FALSE, y1 = NA, y2 = NA,
+                   yaxlimit = FALSE, y1 = NA, y2 = NA, horizontal = FALSE,
                    title = NULL, xlab = NULL, ylab = NULL, 
                    title_col = 'black', title_vjust = 0.5,
                    title_fam = 'serif', title_face = 'plain', 
@@ -21,11 +21,6 @@ ggbar1 <- function(data, column, bar_col = 'blue', bor_col = 'black',
   
   p <- ggplot(data, aes_string(column)) +
     geom_bar(fill = bar_col, col = bor_col)
-  
-  if(xaxlimit) {
-    p <- p + xlim(x1, x2)
-    p
-  }
   
   if (yaxlimit) {
     p <- p + ylim(y1, y2)
@@ -44,6 +39,10 @@ ggbar1 <- function(data, column, bar_col = 'blue', bor_col = 'black',
                                   face = yax_face, size = yax_size, hjust = yax_hjust,
                                   vjust = yax_vjust)
     )
+  
+  if (horizontal) {
+    p <- p + coord_flip()
+  }
   
   
   if(remove_xax) {
@@ -70,4 +69,4 @@ ggbar1 <- function(data, column, bar_col = 'blue', bor_col = 'black',
   
 }
 
-ggbar1(mtcars, 'cyl', yaxlimit = TRUE, y1 = 0, y2 = 20)
+ggbar1(mtcars, 'cyl', yaxlimit = TRUE, y1 = 0, y2 = 20, horizontal = TRUE)
